@@ -1,9 +1,8 @@
 {"rates": [
-  {"country": "CAD", "rate": 1.4753},
-  {"country": "CNY", "rate": 7.6838},
-  {"country": "GBP", "rate": 0.88405},
-  {"country": "JPY", "rate": 131.54},
-  {"country": "USD", "rate": 1.159}]
+  {"country": "CNY", "rate": 5.2232, "amount": 0},
+  {"country": "GBP", "rate": 0.59972, "amount": 0},
+  {"country": "JPY", "rate": 89.147, "amount": 0},
+  {"country": "USD", "rate": 0.78693, "amount": 0}]
 }
 
 // {"rates": [

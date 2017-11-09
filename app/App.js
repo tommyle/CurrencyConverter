@@ -40,7 +40,7 @@ export default class App extends Component {
     this.setState({
       isLoading: false,
       dataSource: ds.cloneWithRows(rates.rates),
-      amountToConvert: "0",
+      amountToConvert: "1,000",
       flags:{"CAD": require("../resources/images/canada.png"),
              "GBP": require("../resources/images/united-kingdom.png"),
              "JPY": require("../resources/images/japan.png"),
@@ -55,7 +55,7 @@ export default class App extends Component {
             "USD": "United States Dollar"}
     });
 
-    // return fetch('https://api.fixer.io/latest')
+    // return fetch('https://api.fixer.io/latest?base=CAD')
     //   .then((response) => response.json())
     //   .then((responseJson) => {
     //     let ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
@@ -69,6 +69,18 @@ export default class App extends Component {
     //     console.error(error);
     //   });
   }
+
+  _onAmountChanged = (event) => {
+    this.setState({amountToConvert: event.nativeEvent.text});
+
+    for(var key in rates.rates) {
+      var value = rates.rates[key];
+      rates.rates[key].amount = (rates.rates[key].rate *  parseFloat(this.state.amountToConvert)).toFixed(2);
+    }
+
+    let ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});    
+    this.setState({dataSource: ds.cloneWithRows(rates.rates)});
+  };
 
   renderItem = (rowData) => {
 
@@ -85,7 +97,7 @@ export default class App extends Component {
           <Text style={tableStyle.title}
               numberOfLines={1}>{rowData.country}</Text>
           <View style={tableStyle.textContainer}>
-            <Text style={tableStyle.price}>{rowData.rate}</Text>
+            <Text style={tableStyle.price}>{rowData.amount}</Text>
             <Text style={tableStyle.country}>{description}</Text>
           </View>
         </View>
@@ -104,15 +116,19 @@ export default class App extends Component {
 
     return (
       <View style={styles.container}>
-        <Text style={styles.header}>
-          Currency Converter
-        </Text>
-        <TextInput style={styles.input}
-            autoCapitalize="none"
-            autoCorrect={false}
-            placeholder="Amount"
-            onChangeText={(amountToConvert) => this.setState({amountToConvert})}
-            value={this.state.amountToConvert} />
+        <View style={styles.header}>
+          <Image style={tableStyle.flagImage} source={require("../resources/images/canada.png")} />
+          <Text style={styles.headerLabel}
+              numberOfLines={1}>CAD</Text>
+          <View style={tableStyle.textContainer}>
+            <TextInput style={styles.input}
+                autoCapitalize="none"
+                autoCorrect={false}
+                placeholder="Amount"
+                onChange={this._onAmountChanged}
+                value={this.state.amountToConvert} />
+          </View>
+        </View>
         {/* <TouchableHighlight
           style={styles.button}
           onPress={() => this._convertButtonPressed()}>
@@ -209,18 +225,27 @@ const styles = StyleSheet.create({
     fontSize: 16,
   },
   header: {
+    flexDirection: 'row',
+    height: 120,
     marginTop: 25,
+    alignSelf: 'stretch',    
+    backgroundColor: "#2D2D2D",
+    alignItems: "center",
+    padding: 10,
+  },
+  headerLabel: {
+    padding: 5,
     fontSize: 20,
+    color: 'white'
   },
   input: {
     height: 44,
-    width: 250,
-    borderColor: '#96A6B4',
-    borderWidth: 1,
+    borderColor: 'white',
+    borderWidth: 0,
     borderRadius: 3,
-    marginTop: 10,
-    alignSelf: 'center',
-    padding: 10,
-    textAlign: 'right'
+    textAlign: 'right',
+    fontSize: 30,
+    fontWeight: "300",
+    color: "white",
   },
 });
