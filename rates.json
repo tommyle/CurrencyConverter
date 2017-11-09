@@ -1,0 +1,41 @@
+{"rates": [
+  {"country": "CAD", "rate": 1.4753},
+  {"country": "CNY", "rate": 7.6838},
+  {"country": "GBP", "rate": 0.88405},
+  {"country": "JPY", "rate": 131.54},
+  {"country": "USD", "rate": 1.159}]
+}
+
+// {"rates": [
+//   {"country": "AUD", "rate": 1.5094},
+//   {"country": "BGN", "rate": 1.9558},
+//   {"country": "BRL", "rate": 3.7662},
+//   {"country": "CAD", "rate": 1.4753},
+//   {"country": "CHF", "rate": 1.1581},
+//   {"country": "CNY", "rate": 7.6838},
+//   {"country": "CZK", "rate": 25.56},
+//   {"country": "DKK", "rate": 7.4434},
+//   {"country": "GBP", "rate": 0.88405},
+//   {"country": "HKD", "rate": 9.0363},
+//   {"country": "HRK", "rate": 7.539},
+//   {"country": "HUF", "rate": 311.85},
+//   {"country": "IDR", "rate": 15667},
+//   {"country": "ILS", "rate": 4.0704},
+//   {"country": "INR", "rate": 75.32},
+//   {"country": "JPY", "rate": 131.54},
+//   {"country": "KRW", "rate": 1290.3},
+//   {"country": "MXN", "rate": 22.102},
+//   {"country": "MYR", "rate": 4.896},
+//   {"country": "NOK", "rate": 9.473},
+//   {"country": "NZD", "rate": 1.6724},
+//   {"country": "PHP", "rate": 59.388},
+//   {"country": "PLN", "rate": 4.2341},
+//   {"country": "RON", "rate": 4.628},
+//   {"country": "RUB", "rate": 68.717},
+//   {"country": "SEK", "rate": 9.7288},
+//   {"country": "SGD", "rate": 1.5786},
+//   {"country": "THB", "rate": 38.374},
+//   {"country": "TRY", "rate": 4.505},
+//   {"country": "USD", "rate": 1.159},
+//   {"country": "ZAR", "rate": 16.442}]
+// }
