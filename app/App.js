@@ -6,6 +6,7 @@
 
 import rates from '../rates.json';
 import React, { Component } from 'react';
+import DarkTheme from './DarkTheme';
 import {
   Platform,
   StyleSheet,
@@ -15,7 +16,8 @@ import {
   TextInput,
   ActivityIndicator,
   ListView,
-  Image
+  Image,
+  StatusBar
 } from 'react-native';
 
 const instructions = Platform.select({
@@ -40,7 +42,7 @@ export default class App extends Component {
     this.setState({
       isLoading: false,
       dataSource: ds.cloneWithRows(rates.rates),
-      amountToConvert: "1,000",
+      amountToConvert: "0",
       flags:{"CAD": require("../resources/images/canada.png"),
              "GBP": require("../resources/images/united-kingdom.png"),
              "JPY": require("../resources/images/japan.png"),
@@ -75,7 +77,8 @@ export default class App extends Component {
 
     for(var key in rates.rates) {
       var value = rates.rates[key];
-      rates.rates[key].amount = (rates.rates[key].rate *  parseFloat(this.state.amountToConvert)).toFixed(2);
+      rates.rates[key].amount = (rates.rates[key].rate *  parseFloat(event.nativeEvent.text)).toFixed(2);
+      console.log(rates.rates[key].rate);
     }
 
     let ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});    
@@ -116,12 +119,16 @@ export default class App extends Component {
 
     return (
       <View style={styles.container}>
+         <StatusBar
+          backgroundColor="blue"
+          barStyle="light-content"/>
         <View style={styles.header}>
           <Image style={tableStyle.flagImage} source={require("../resources/images/canada.png")} />
           <Text style={styles.headerLabel}
               numberOfLines={1}>CAD</Text>
           <View style={tableStyle.textContainer}>
             <TextInput style={styles.input}
+                keyboardType="decimal-pad"
                 autoCapitalize="none"
                 autoCorrect={false}
                 placeholder="Amount"
@@ -156,7 +163,7 @@ const tableStyle = StyleSheet.create({
   },
   separator: {
     height: 1,
-    backgroundColor: '#dddddd'
+    backgroundColor: '#eeeeee'
   },
   price: {
     fontSize: 24,
@@ -189,7 +196,7 @@ const tableStyle = StyleSheet.create({
 const styles = StyleSheet.create({
   icon: { 
     width: 44, 
-    height: 44, 
+    height: 44,
   },
   listView: {
     flex: 1,
@@ -226,12 +233,12 @@ const styles = StyleSheet.create({
   },
   header: {
     flexDirection: 'row',
-    height: 120,
-    marginTop: 25,
+    height: 140,
     alignSelf: 'stretch',    
     backgroundColor: "#2D2D2D",
     alignItems: "center",
     padding: 10,
+    paddingTop: 40,
   },
   headerLabel: {
     padding: 5,

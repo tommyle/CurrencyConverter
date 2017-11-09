@@ -18,11 +18,7 @@ const MyStatusBar = ({backgroundColor, ...props}) => (
 class DarkTheme extends Component {
   render() {
     return (
-      <View style={styles.container}>
-        <MyStatusBar backgroundColor="#5E8D48" barStyle="light-content" />
-        <View style={styles.appBar} />
-        <View style={styles.content} />
-      </View>
+      <MyStatusBar backgroundColor="#5E8D48" barStyle="light-content" />
     );
   }
 }
