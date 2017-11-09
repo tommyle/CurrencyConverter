@@ -5,6 +5,7 @@
  */
 
 import rates from '../rates.json';
+import countryDescription from '../countryDescription.json';
 import React, { Component } from 'react';
 import DarkTheme from './DarkTheme';
 import {
@@ -42,19 +43,41 @@ export default class App extends Component {
     this.setState({
       isLoading: false,
       dataSource: ds.cloneWithRows(rates.rates),
-      amountToConvert: "0",
-      flags:{"CAD": require("../resources/images/canada.png"),
-             "GBP": require("../resources/images/united-kingdom.png"),
-             "JPY": require("../resources/images/japan.png"),
-             "EUR": require("../resources/images/european-union.png"),
-             "CNY": require("../resources/images/china.png"),
-             "USD": require("../resources/images/united-states-of-america.png")},
-      country:{"CAD": "Canadian Dollar",
-            "GBP": "Great Britain Pound",
-            "JPY": "Japanese Yen",
-            "EUR": "Euro",
-            "CNY": "Chinese Yuan",
-            "USD": "United States Dollar"}
+      amountToConvert: "",
+      flags:{
+        "AUD": require("../resources/images/aud.png"),
+        "BGN": require("../resources/images/bgn.png"),
+        "BRL": require("../resources/images/brl.png"),
+        "CHF": require("../resources/images/chf.png"),
+        "CNY": require("../resources/images/cny.png"),
+        "CZK": require("../resources/images/czk.png"),
+        "DKK": require("../resources/images/dkk.png"),
+        "EUR": require("../resources/images/eur.png"),
+        "GBP": require("../resources/images/gbp.png"),
+        "HKD": require("../resources/images/hkd.png"),
+        "HRK": require("../resources/images/hrk.png"),
+        "HUF": require("../resources/images/huf.png"),
+        "IDR": require("../resources/images/idr.png"),
+        "ILS": require("../resources/images/ils.png"),
+        "INR": require("../resources/images/inr.png"),
+        "JPY": require("../resources/images/jpy.png"),
+        "KRW": require("../resources/images/krw.png"),
+        "MXN": require("../resources/images/mxn.png"),
+        "MYR": require("../resources/images/myr.png"),
+        "NOK": require("../resources/images/nok.png"),
+        "NZD": require("../resources/images/nzd.png"),
+        "PHP": require("../resources/images/php.png"),
+        "PLN": require("../resources/images/pln.png"),
+        "RON": require("../resources/images/ron.png"),
+        "RUB": require("../resources/images/rub.png"),
+        "SEK": require("../resources/images/sek.png"),
+        "SGD": require("../resources/images/sgd.png"),
+        "THB": require("../resources/images/thb.png"),
+        "TRY": require("../resources/images/try.png"),
+        "USD": require("../resources/images/usd.png"),
+        "ZAR": require("../resources/images/zar.png")
+      },
+      country: countryDescription
     });
 
     // return fetch('https://api.fixer.io/latest?base=CAD')
@@ -77,8 +100,13 @@ export default class App extends Component {
 
     for(var key in rates.rates) {
       var value = rates.rates[key];
-      rates.rates[key].amount = (rates.rates[key].rate *  parseFloat(event.nativeEvent.text)).toFixed(2);
-      console.log(rates.rates[key].rate);
+      var amount = (rates.rates[key].rate * parseFloat(event.nativeEvent.text)).toFixed(2);
+
+      if (isNaN(amount)) {
+        amount = '0.00';
+      }
+
+      rates.rates[key].amount = amount;
     }
 
     let ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});    
@@ -87,12 +115,12 @@ export default class App extends Component {
 
   renderItem = (rowData) => {
 
-    var imagePath = require("../resources/images/canada.png");
-    var description = "Unknown";
+    var imagePath = require("../resources/images/cad.png");
     if (this.state.flags[rowData.country]) {
       imagePath = this.state.flags[rowData.country];
-      description = this.state.country[rowData.country];
     }
+
+    var description = this.state.country[rowData.country];
 
     return <View>
         <View style={tableStyle.rowContainer}>
@@ -123,15 +151,17 @@ export default class App extends Component {
           backgroundColor="blue"
           barStyle="light-content"/>
         <View style={styles.header}>
-          <Image style={tableStyle.flagImage} source={require("../resources/images/canada.png")} />
+          <Image style={tableStyle.flagImage} source={require("../resources/images/cad.png")} />
           <Text style={styles.headerLabel}
               numberOfLines={1}>CAD</Text>
           <View style={tableStyle.textContainer}>
             <TextInput style={styles.input}
-                keyboardType="decimal-pad"
+                keyboardType="numeric"
+                underlineColorAndroid='transparent'
                 autoCapitalize="none"
                 autoCorrect={false}
                 placeholder="Amount"
+                placeholderTextColor='#888888'
                 onChange={this._onAmountChanged}
                 value={this.state.amountToConvert} />
           </View>
@@ -246,13 +276,13 @@ const styles = StyleSheet.create({
     color: 'white'
   },
   input: {
-    height: 44,
+    height: 60,
     borderColor: 'white',
     borderWidth: 0,
     borderRadius: 3,
     textAlign: 'right',
     fontSize: 30,
     fontWeight: "300",
-    color: "white",
+    color: "white"
   },
 });
